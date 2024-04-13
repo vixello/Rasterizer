@@ -153,6 +153,7 @@
     <ClInclude Include="include\ConeMesh.h" />
     <ClInclude Include="include\flt.h" />
     <ClInclude Include="include\float4x4.h" />
+    <ClInclude Include="include\Light.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\SphereMesh.h" />
     <ClInclude Include="include\Rasterizer.h" />

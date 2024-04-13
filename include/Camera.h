@@ -88,7 +88,24 @@ public:
 
         return result * Translation(-eye.x, -eye.y, -eye.z);
     }
-    static void vertexShader(std::vector<Point>& vertices, const float4x4& transform) {
+    //static void vertexShader(std::vector<Point>& vertices, const float4x4& transform) {
+    //    for (auto& vertex : vertices) {
+    //        // Convert Point vertex to float4 for matrix multiplication
+    //        Vector4 vertexVec(vertex.x, vertex.y, vertex.z, 1.0f);
+    //        vertexVec = transform * vertexVec;
+    //        // Update the vertex coordinates with transformed values
+    //        vertex.x = vertexVec.x;
+    //        vertex.y = vertexVec.y;
+    //        vertex.z = vertexVec.z;
+    //    }
+    //}
+    static void vertexShader(std::vector<Vector3>& vertices, const float4x4& transform, Vector3& lightPosition) {
+        // Transform the light position into the same space as the vertices
+        Vector4 lightPosVec(lightPosition.x, lightPosition.y, lightPosition.z, 1.0f);
+        lightPosVec = transform * lightPosVec;
+        lightPosition = Vector3(lightPosVec.x, lightPosVec.y, lightPosVec.z);
+
+        // Transform the vertices
         for (auto& vertex : vertices) {
             // Convert Point vertex to float4 for matrix multiplication
             Vector4 vertexVec(vertex.x, vertex.y, vertex.z, 1.0f);
@@ -99,19 +116,7 @@ public:
             vertex.z = vertexVec.z;
         }
     }
-    //static void vertexShader(std::vector<Point>& vertices, const float4x4& transform) {
-    //    for (auto& vertex : vertices) {
-    //        Vector4 vertexVec(vertex.x, vertex.y, vertex.z, 1.0f);
-    //        vertexVec = transform * vertexVec;
 
-    //        // Perform perspective division
-    //        if (vertexVec.w != 0) { // Avoid division by zero
-    //            vertex.x = vertexVec.x / vertexVec.w;
-    //            vertex.y = vertexVec.y / vertexVec.w;
-    //            vertex.z = vertexVec.z / vertexVec.w;
-    //        }
-    //    }
-    //}
 private:
     std::array<Vector4, 4> grid{};
 };
